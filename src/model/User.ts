@@ -1,11 +1,11 @@
-import mongoose, {Schema, Document} from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-export interface Message extends Document {
+export interface Message extends Document {  //this interface is used to define the structure of the message object: it extends the Document interface from mongoose because document is the base interface for all the mongoose documents
     content: string;
     createdAt: Date;
 }
 
-const MessageSchema: Schema<Message> = new Schema({
+const MessageSchema: Schema<Message> = new Schema({ 
     content: {
         type: String,
         required: true
@@ -31,7 +31,7 @@ export interface User extends Document {
 const UserSchema: Schema<User> = new Schema({
     username: {
         type: String,
-        required: [true, "username is required"], 
+        required: [true, "username is required"],
         unique: true,
         lowercase: true,
         trim: true,
@@ -42,7 +42,7 @@ const UserSchema: Schema<User> = new Schema({
         required: [true, "email is required"],
         unique: true,
         match: [/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g, 'please use a valid email address']
-        
+
     },
 
     password: {
@@ -72,7 +72,7 @@ const UserSchema: Schema<User> = new Schema({
 
     messages: [MessageSchema]
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 const UserModel = mongoose.models.User as mongoose.Model<User> || mongoose.model<User>("User", UserSchema);
 
