@@ -7,12 +7,13 @@ type ConnectionObject = { // type for connection object
  const connection: ConnectionObject = {} // For storing connection object
 
  async function dbConnect(): Promise<void>{
+
       if(connection.isConnected){ // If connection object is already defined, then simply return
         console.log("Already connected to database");
         return;
       }
       try {
-        const db = await mongoose.connect(process.env.MONGODB_URI || '', {}); // Connect to database
+        const db = await mongoose.connect(`${process.env.MONGO_URI}/askBuddy` || '', {}); // Connect to database
         connection.isConnected = db.connections[0].readyState // Store the connection object
 
         console.log("DB Connected Successfully");
