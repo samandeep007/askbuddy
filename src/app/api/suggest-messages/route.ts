@@ -19,8 +19,9 @@ export async function POST(req: Request) {
             const chunkText = chunk.text();
             myresponse.push(chunkText)
         }
+    
 
-        return NextResponse.json(myresponse.join(" ").replace('\n', "").replaceAll('\" ', ""))
+        return NextResponse.json(myresponse.join(" ").replaceAll('\n', "").replaceAll('\" ', ""))
 
 
     }
