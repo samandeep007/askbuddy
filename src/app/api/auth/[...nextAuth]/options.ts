@@ -19,8 +19,8 @@ export const authOptions: NextAuthOptions = {
                 try {
                     const user = await UserModel.findOne({
                         $or: [
-                            { email: credentials.identifer.email },
-                            { username: credentials.identifer.username },
+                            { email: credentials.identifer},
+                            { username: credentials.identifer},
                         ],
                     });
                     if (!user) {
@@ -52,11 +52,20 @@ export const authOptions: NextAuthOptions = {
 
         async jwt({ token, user}) {
             if(user){
-                token._id = user._id?.toString()
+                token._id = user._id?.toString();
+                token.isVerified = user.isVerified;
+                token.isAcceptingMessages= user.isAcceptingMessages;
+                token.username= user.username;
             }
             return token
         },
         async session({ session, token }) {
+            if(token){
+                session.user._id = token._id;
+                session.user.isVerified = token.isVerified;
+                session.user.isAcceptingMessages = token.isAcceptingMessages;
+                session.user.username = token.username;
+            }
             return session
         }      
     },
