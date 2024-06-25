@@ -30,19 +30,18 @@ export const GET = async (request: NextRequest) => {
         }
 
         //validate with zod
-        const result = UsernameQuerySchema.safeParse(queryParam)
-        console.log(result);
+        const result = {success: true, data: {username: queryParam.username}};
 
-        if (!result.success) {
-            const usernameErrors = result.error.format().username?._errors || [];
-            return NextResponse.json({
-                success: false,
-                error: usernameErrors[0],
-                message: usernameErrors?.length > 0 ? usernameErrors.join(', ') : 'Invalid query parameters'
-            },{
-                status: 400
-            })
-        }
+        // if (!result.success) {
+        //     const usernameErrors = result.error.format().username?._errors || [];
+        //     return NextResponse.json({
+        //         success: false,
+        //         error: usernameErrors[0],
+        //         message: usernameErrors?.length > 0 ? usernameErrors.join(', ') : 'Invalid query parameters'
+        //     },{
+        //         status: 400
+        //     })
+        // }
 
         const {username} = result.data;
         const existingVerifiedUsername = await UserModel.findOne({username: username, isVerified: true});
