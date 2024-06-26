@@ -14,7 +14,7 @@ import { Button } from '@react-email/components'
 import { Input } from '@/components/ui/input'
 
 
-export default function page() {
+export default function VerifyPage() {
   const router = useRouter()
   const params = useParams<{ username: string }>()
   const { toast } = useToast()
