@@ -1,6 +1,8 @@
 import "next-auth";
 import { DefaultSession } from "next-auth";
 
+console.log("error ethe aa")
+
 declare module 'next-auth' {
     interface User{
         _id?: string;
