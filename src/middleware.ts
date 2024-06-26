@@ -17,7 +17,8 @@ export async function middleware(request: NextRequest) {
 
 }
 
-// See "Matching Paths" below to learn more
+// See "Matching Paths" below to learn more: 
+// TODO Read middleware docs
 export const config = {
     matcher: ['/sign-in', '/sign-up', '/', '/verify/:path*', '/dashboard/:path*'],
 }
