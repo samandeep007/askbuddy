@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios, { AxiosError } from 'axios'
 import { ApiResponse } from '@/types/ApiResponse'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Button } from '@react-email/components'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 
@@ -35,7 +35,7 @@ export default function VerifyPage() {
         description: response.data.message
       })
 
-      router.replace('sign-in')
+      router.replace('/sign-in')
     } catch (error) {
       console.error("Error in signup of user", error)
       const axiosError = error as AxiosError<ApiResponse>
@@ -53,9 +53,10 @@ export default function VerifyPage() {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Verify your account
+            Verify Your Account
           </h1>
-          <p className="mb-4">You're just a step away from us</p>
+          <p className="mb-4">Enter the verification code sent to your email</p>
+          <div></div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -63,9 +64,9 @@ export default function VerifyPage() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>OTP</FormLabel>
+                    <FormLabel>Verification Code</FormLabel>
                     <FormControl>
-                      <Input placeholder="One-time Password" {...field}
+                      <Input placeholder="code" {...field}
                         onChange={e => {
                           field.onChange(e);
                         }} />
@@ -73,7 +74,6 @@ export default function VerifyPage() {
                   </FormItem>
                 )}
               />
-
               <Button type="submit">Submit</Button>
             </form>
           </Form>
