@@ -63,6 +63,12 @@ export default function DashboardPage() {
     try {
       const response = await axios.get<ApiResponse>('/api/get-messages');
       setMessages(response.data.messages || []);
+      if(messages?.length === 0){
+        toast({
+          title: "Message Inbox updated",
+          description: "User inbox is empty"
+        })
+      }
       if(refresh){
         toast({
           title: "Message Inbox updated",
@@ -112,10 +118,8 @@ export default function DashboardPage() {
     }
   }
 
-  const {username} = session?.user as User
-  //TODO: do more research
-  const baseUrl = `${window.location.protocol}://${window.location.host}` 
-  const profileUrl = `{baseUrl}/u/${username}`
+
+ 
   
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl)
@@ -130,6 +134,11 @@ export default function DashboardPage() {
  if(!session || !session.user ){
   return <div>Please login</div>
  }
+
+  //TODO: do more research
+  const {username} = session.user as User
+  const baseUrl = `${window.location.protocol}://${window.location.host}` 
+  const profileUrl = `${baseUrl}/u/${username}`
 
 
   
@@ -179,7 +188,7 @@ export default function DashboardPage() {
       )}
     </Button>
     <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-      {messages.length > 0 ? (
+      {/* {messages.length > 0 ? (
         messages.map((message, index) => (
           <MessageCard
             key={message._id}
@@ -189,7 +198,7 @@ export default function DashboardPage() {
         ))
       ) : (
         <p>No messages to display.</p>
-      )}
+      )} */}
     </div>
   </div>
   )

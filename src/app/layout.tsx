@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-      <body className={inter.className}>{children}<Toaster /></body>
+      <body className='flex flex-col min-h-screen'>{children}<Toaster /></body>
       </AuthProvider>
     </html>
   )

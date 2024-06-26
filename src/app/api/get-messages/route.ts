@@ -30,13 +30,23 @@ export const GET = async (request: NextRequest) => {
             {$group: {_id: '$_id', messages: {$push: '$messages'}}}
         ])
 
-        if(!currentUser || currentUser.length === 0){
+        if(!currentUser){
             return NextResponse.json({
                 success: false,
                 message: 'User not found'
             }, {
                 status: 404
             })
+        }
+
+        if( currentUser.length === 0){
+            return NextResponse.json({
+                success: true,
+                message: "User Inbox is empty"
+            },
+        {
+            status: 200
+        })
         }
 
         return NextResponse.json({
