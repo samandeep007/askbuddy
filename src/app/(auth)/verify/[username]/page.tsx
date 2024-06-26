@@ -1,3 +1,5 @@
+'use client'
+
 import { useToast } from '@/components/ui/use-toast'
 import { verifySchema } from '@/schemas/verifySchema'
 import { useParams, useRouter } from 'next/navigation'
