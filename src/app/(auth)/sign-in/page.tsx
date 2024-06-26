@@ -72,7 +72,7 @@ export default function SigninPage() {
           Verify Your Account
         </h1>
         <p className="mb-4">Enter the verification code sent to your email</p>
-        <div></div>
+        
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
