@@ -24,7 +24,7 @@ ELSE
         verifyCodeExpiry: expiryDate
     }
     CALL newUser.save()
-END IF  
+END IF
  */
 
 export const POST = async (request: Request) => {
