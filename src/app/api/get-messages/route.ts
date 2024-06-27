@@ -46,7 +46,7 @@ export const GET = async (request: NextRequest) => {
                     status: 200
                 })
         }
-        console.log(messages)
+    
 
         return NextResponse.json({
             success: true,

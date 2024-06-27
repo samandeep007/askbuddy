@@ -24,10 +24,13 @@ export const POST = async (request: NextRequest) => {
     const userId = user._id;
     const { acceptMessages } = await request.json();
 
+    const messageStatus = acceptMessages === "on" ? true : false
+    console.log(messageStatus)
+
     try {
         const updatedUser = await UserModel.findByIdAndUpdate(userId, {
             $set: {
-                isAcceptingMessages: acceptMessages
+                isAcceptingMessages: messageStatus
             }
         }, { new: true })
 
@@ -75,9 +78,9 @@ export const GET = async(request: NextRequest) => {
         })
     }
 
-    const userId = user._id;
+    
     try{
-        const currentUser = await UserModel.findById(userId);
+        const currentUser = await UserModel.findById(user._id);
         if(!currentUser){
             return NextResponse.json({
                 success: false,
@@ -87,6 +90,7 @@ export const GET = async(request: NextRequest) => {
             })
         }
         else {
+            console.log(currentUser.isAcceptingMessage)
             return NextResponse.json({
                 success: true,
                 message: `User is ${currentUser.isAcceptingMessage ? "" : "not"} accepting messages`,

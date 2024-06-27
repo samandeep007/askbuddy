@@ -28,6 +28,7 @@ type MessageCardProps = {
     message: Message;
     onMessageDelete: (messageId: string) => void
 }
+import dayjs from 'dayjs'
 
 export default function MessageCard({message, onMessageDelete}: MessageCardProps) {
 
@@ -42,8 +43,8 @@ export default function MessageCard({message, onMessageDelete}: MessageCardProps
     }
     
   return (
-    <Card>
-  <CardHeader>
+    <Card >
+  <CardHeader className="flex flex-row">
     <CardTitle>{message.content}</CardTitle>
     <AlertDialog>
   <AlertDialogTrigger asChild>
@@ -64,8 +65,9 @@ export default function MessageCard({message, onMessageDelete}: MessageCardProps
   </AlertDialogContent>
 </AlertDialog>
 
-    <CardDescription>Card Description</CardDescription>
+   
   </CardHeader>
+  <CardContent> {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}</CardContent>
 </Card>
 
   )

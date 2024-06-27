@@ -101,7 +101,7 @@ export default function DashboardPage() {
   //handle switch change
   const handleSwitchChange = async() => {
     try {
-      const response = await axios.post<ApiResponse>('/api/accept-message', {acceptMessages: !acceptMessages})
+      const response = await axios.post<ApiResponse>('/api/accept-message', {acceptMessages: acceptMessages})
       setValue('acceptMessages', !acceptMessages)
       toast({
         title: response?.data.message || 'Message acceptance changed',
