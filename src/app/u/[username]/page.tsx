@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { ApiResponse } from '@/types/ApiResponse'
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Form,
   FormControl,
@@ -89,37 +90,45 @@ const message = form.watch("content") || ''
 
 
   return (
-    <div className='flex flex-col md:w-1/2 md:mx-auto my-20'>
-      <h1></h1>
-  <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+    <div className='md:w-1/2 md:mx-auto my-12 '>
+      <h1 className='text-center text-4xl font-bold'>Public Profile Link</h1>
+      <div >
+  <Form {...form} >
+      <form onSubmit={form.handleSubmit(onSubmit)} className='mt-8'>
         <FormField
           control={form.control}
+      
           name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Send Anonymous Message to @{params.username}</FormLabel>
               <FormControl>
-                <Input placeholder="Write your anonymous message here" {...field}  onChange={e => {
+              <Textarea placeholder="Write your anonymous message here" {...field}  onChange={e => {
                         field.onChange(e);
                       }} />
+                
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+             
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={message.length === 0 || isSubmitting}>Submit</Button>
+        <div className='flex items-center my-8'>
+        <Button type="submit" className='mx-auto' disabled={message.length === 0 || isSubmitting}>Submit</Button>
+        </div>
       </form>
     </Form>
+    
+    </div>
+   
     <Button onClick={suggestMessages} >Suggest</Button>
-
+    <div >
     {messages.map((message, index) => (
     <button onClick={()=>{form.setValue("content", message )}} key={index}>{message}</button>
     ))}
     </div>
+    </div>
+  
 
   )
 }
