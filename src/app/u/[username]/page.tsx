@@ -11,6 +11,9 @@ import { ApiResponse } from '@/types/ApiResponse'
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { Separator } from '@/components/ui/separator'
+
+
 import {
   Form,
   FormControl,
@@ -23,6 +26,7 @@ import {
 } from "@/components/ui/form"
 
 import { Input } from "@/components/ui/input"
+import { useRouter } from 'next/navigation'
 
 
 
@@ -90,7 +94,7 @@ const message = form.watch("content") || ''
 
 
   return (
-    <div className='md:w-1/2 md:mx-auto my-12 '>
+    <div className=' md:w-7/12 md:mx-auto my-12 p-4 '>
       <h1 className='text-center text-4xl font-bold'>Public Profile Link</h1>
       <div >
   <Form {...form} >
@@ -114,23 +118,30 @@ const message = form.watch("content") || ''
           )}
         />
         <div className='flex items-center my-8'>
-        <Button type="submit" className='mx-auto' disabled={message.length === 0 || isSubmitting}>Submit</Button>
+        <Button type="submit" className='mx-auto' disabled={message.length === 0 || isSubmitting}>Send It</Button>
         </div>
       </form>
     </Form>
     
     </div>
    
-    <Button onClick={suggestMessages} >Suggest</Button>
+    <Button onClick={suggestMessages} >Suggest Messages</Button>
     <h1 className='mt-4'>Click on any message below to select it.</h1>
-    <div className='flex flex-col space-y-4 border-gray-200 border rounded-lg p-8 my-4' >
+    <div className='flex flex-col space-y-4 border-gray-200 border rounded-lg p-8 mt-4 mb-8' >
       <h1 className='text-2xl font-semibold'>Messages</h1>
     {messages.map((message, index) => (
     <Button className="bg-transparent text-black hover:bg-gray-100 border-gray-200 border" onClick={()=>{form.setValue("content", message )}} key={index}>{message}</Button>
     ))}
-    
+   
+    </div>
+    <Separator/>
+
+<h1 className='text-center my-4'>Get Your Message Board</h1>
+<div className='flex items-center'>
+    <Button className="mx-auto" onClick={()=>{useRouter().replace('/sign-up')}}>Create Your Account</Button>
     </div>
     </div>
+
   
 
   )
