@@ -18,10 +18,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-import { Button } from "./button"
+import { Button } from "./ui/button"
 import { X } from "lucide-react"
 import { Message } from "@/model/User"
-import { useToast } from "./use-toast"
+import { useToast } from "./ui/use-toast"
 import axios from "axios"
 import { ApiResponse } from "@/types/ApiResponse"
 type MessageCardProps = {

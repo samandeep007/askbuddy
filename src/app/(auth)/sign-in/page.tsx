@@ -3,6 +3,7 @@ import {useState} from 'react'
 import axios, { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 import {
   Form,
   FormControl,
@@ -69,45 +70,44 @@ export default function SigninPage() {
     <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
       <div className="text-center">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-          Verify Your Account
+          Welcome Back to Ask Buddy
         </h1>
-        <p className="mb-4">Enter the verification code sent to your email</p>
-        
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              name="identifier"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username/Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="username/email" {...field}
-                      onChange={e => {
-                        field.onChange(e);
-                      }} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-              <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="password" {...field}
-                      onChange={e => {
-                        field.onChange(e);
-                      }} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={isSubmitting}>Submit</Button>
-          </form>
-        </Form>
+        <p className="mb-4">Sign in to continue your secret conversations</p>
+      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            name="identifier"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email/Username</FormLabel>
+                <Input {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="password"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <Input type="password" {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className='w-full' type="submit">Sign In</Button>
+        </form>
+      </Form>
+      <div className="text-center mt-4">
+        <p>
+          Not a member yet?{' '}
+          <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   </div>

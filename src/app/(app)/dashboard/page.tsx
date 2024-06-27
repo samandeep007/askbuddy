@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton"
+import MessageCard from "@/components/MessageCard";
 
 
 export default function DashboardPage() {
@@ -207,7 +208,11 @@ export default function DashboardPage() {
       {messages.length > 0 ? (
         messages.map((message, index) => (
         <div>
-         {message.content}
+           <MessageCard
+              key={index}
+              message={message}
+              onMessageDelete={handleDeleteMessage}
+            />
         </div>
         ))
       ) : (
