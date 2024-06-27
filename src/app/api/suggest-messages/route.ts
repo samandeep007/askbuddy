@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         }
     
 
-        return NextResponse.json(myresponse.join(" ").replaceAll('\n', "").replaceAll('\" ', ""))
+        return NextResponse.json({messages: myresponse.join(" ").replaceAll('\n', "").replaceAll('\" ', "")})
 
 
     }

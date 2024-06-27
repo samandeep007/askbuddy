@@ -30,12 +30,21 @@ export default function page() {
   const params = useParams<{ username: string }>();
   const {toast} = useToast();
 
+  const[messages, setMessages] = useState([
+    "What's your favorite movie?",
+    "Do you have any pets?",
+    "What's your dream job?"
+  ])
+
+
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema)
   })
 
 
-  const message = form.watch("content");
+
+const message = form.watch("content") || ''
+
   
   
 
@@ -67,10 +76,21 @@ export default function page() {
     }
   }
 
+  const suggestMessages = async () => {
+        try {
+          const response = await axios.post('/api/suggest-messages');
+          setMessages(response.data.messages.split("||"))
+          
+        } catch (error) {
+          console.log(error)
+        }
+  }
+
 
 
   return (
-    <>
+    <div className='flex flex-col md:w-1/2 md:mx-auto my-20'>
+      <h1></h1>
   <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
@@ -80,7 +100,9 @@ export default function page() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Write your anonymous message here" {...field} />
+                <Input placeholder="Write your anonymous message here" {...field}  onChange={e => {
+                        field.onChange(e);
+                      }} />
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -89,10 +111,15 @@ export default function page() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={message?.length === 0 || isSubmitting}>Submit</Button>
+        <Button type="submit" disabled={message.length === 0 || isSubmitting}>Submit</Button>
       </form>
     </Form>
-    </>
+    <Button onClick={suggestMessages} >Suggest</Button>
+
+    {messages.map((message, index) => (
+    <button onClick={()=>{form.setValue("content", message )}} key={index}>{message}</button>
+    ))}
+    </div>
 
   )
 }
