@@ -23,12 +23,8 @@ export const GET = async (request: NextRequest) => {
     const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
-        const currentUser = await UserModel.aggregate([ //  TODO Read About this and add to documentation
-            { $match: { id: userId } },
-            { $unwind: '$messages' }, //Return individual objects instead of array: each object will have the same id as others and a user field
-            { $sort: { 'messages.createdAt': -1 } },
-            { $group: { _id: '$_id', messages: { $push: '$messages' } } }
-        ]).exec();
+        const currentUser = await UserModel.findById(userId);
+      
 
 
         if (!currentUser) {
@@ -39,8 +35,9 @@ export const GET = async (request: NextRequest) => {
                 status: 404
             })
         }
+        const messages = currentUser?.messages
 
-        if (currentUser.length === 0) {
+        if (messages.length === 0) {
             return NextResponse.json({
                 success: true,
                 message: "User Inbox is empty"
@@ -49,11 +46,11 @@ export const GET = async (request: NextRequest) => {
                     status: 200
                 })
         }
-        console.log(currentUser[0].messages)
+        console.log(messages)
 
         return NextResponse.json({
             success: true,
-            messages: currentUser[0].messages
+            messages: messages
 
         }, {
             status: 200
