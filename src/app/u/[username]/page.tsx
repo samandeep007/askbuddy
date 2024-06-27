@@ -97,8 +97,6 @@ const message = form.watch("content") || ''
         }
   }
 
-
-
   return (
     <div className=' md:w-7/12 md:mx-auto my-10 p-4 '>
       <h1 className='text-center text-4xl font-bold'>Public Profile Link</h1>
