@@ -12,7 +12,8 @@ import { useToast } from '@/components/ui/use-toast'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Separator } from '@/components/ui/separator'
-
+import { Skeleton } from '@/components/ui/skeleton'
+import Link from 'next/link'
 
 import {
   Form,
@@ -32,6 +33,7 @@ import { useRouter } from 'next/navigation'
 
 export default function page() {
   const[isSubmitting, setIsSubmitting] = useState(false)
+  const[isSuggesting, setIsSuggesting] = useState(false);
   const params = useParams<{ username: string }>();
   const {toast} = useToast();
 
@@ -41,6 +43,7 @@ export default function page() {
     "What's your dream job?"
   ])
 
+  
 
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema)
@@ -83,22 +86,25 @@ const message = form.watch("content") || ''
 
   const suggestMessages = async () => {
         try {
+          setIsSuggesting(true);
           const response = await axios.post('/api/suggest-messages');
           setMessages(response.data.messages.split("||"))
           
         } catch (error) {
           console.log(error)
+        } finally{
+          setIsSuggesting(false)
         }
   }
 
 
 
   return (
-    <div className=' md:w-7/12 md:mx-auto my-12 p-4 '>
+    <div className=' md:w-7/12 md:mx-auto my-10 p-4 '>
       <h1 className='text-center text-4xl font-bold'>Public Profile Link</h1>
       <div >
   <Form {...form} >
-      <form onSubmit={form.handleSubmit(onSubmit)} className='mt-8'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='mt-6 mb-12'>
         <FormField
           control={form.control}
       
@@ -125,12 +131,20 @@ const message = form.watch("content") || ''
     
     </div>
    
-    <Button onClick={suggestMessages} >Suggest Messages</Button>
+    <Button onClick={suggestMessages} disabled={isSuggesting} >Suggest Messages</Button>
     <h1 className='mt-4'>Click on any message below to select it.</h1>
-    <div className='flex flex-col space-y-4 border-gray-200 border rounded-lg p-8 mt-4 mb-8' >
+    <div className='flex flex-col space-y-4 border-gray-200 border rounded-lg p-6 mt-4 mb-8 flex-wrap' >
       <h1 className='text-2xl font-semibold'>Messages</h1>
-    {messages.map((message, index) => (
-    <Button className="bg-transparent text-black hover:bg-gray-100 border-gray-200 border" onClick={()=>{form.setValue("content", message )}} key={index}>{message}</Button>
+      {isSuggesting && Array.from({length: 3}).map((_, index) => (  <div className="flex items-center justify-center space-x-4">
+  
+      <div className="space-y-2 flex flex-col justify-center">
+    
+        <Skeleton className="h-10 md:w-[48rem] w-[20rem] mx-auto bg-gray-200" />
+      
+      </div>
+    </div>) )} 
+    {!isSuggesting && messages.map((message, index) => (
+    <Button className="bg-transparent text-wrap text-black hover:bg-gray-100 border-gray-200 border" onClick={()=>{form.setValue("content", message )}} key={index}>{message}</Button>
     ))}
    
     </div>
@@ -138,7 +152,9 @@ const message = form.watch("content") || ''
 
 <h1 className='text-center my-4'>Get Your Message Board</h1>
 <div className='flex items-center'>
-    <Button className="mx-auto" onClick={()=>{useRouter().replace('/sign-up')}}>Create Your Account</Button>
+  <Link  className="mx-auto" href='/sign-up'>
+    <Button>Create Your Account</Button>
+    </Link>
     </div>
     </div>
 
