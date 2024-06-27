@@ -122,7 +122,7 @@ const message = form.watch("content") || ''
     </div>
    
     <Button onClick={suggestMessages} >Suggest</Button>
-    <div >
+    <div className='flex flex-col' >
     {messages.map((message, index) => (
     <button onClick={()=>{form.setValue("content", message )}} key={index}>{message}</button>
     ))}
