@@ -33,7 +33,7 @@ AskBuddy is an online platform where you can receive/send anonymous messages. It
       NEXTAUTH_URL=http://localhost:3000
       GEMINI_API_KEY=your_gemini_api_key
       ```
-5. Start the server: `npm start`
+5. Start the server: `npm run dev`
 
 ## Usage:
 1. Open your web browser and navigate to `http://localhost:3000`.
