@@ -24,13 +24,14 @@ export const GET = async (request: NextRequest) => {
 
     try {
         const currentUser = await UserModel.aggregate([ //  TODO Read About this and add to documentation
-            { $match: { id: user._id } }, 
-            {$unwind: '$messages'}, //Return individual objects instead of array: each object will have the same id as others and a user field
-            {$sort: {'messages.createdAt': -1}},
-            {$group: {_id: '$_id', messages: {$push: '$messages'}}}
-        ])
+            { $match: { id: userId } },
+            { $unwind: '$messages' }, //Return individual objects instead of array: each object will have the same id as others and a user field
+            { $sort: { 'messages.createdAt': -1 } },
+            { $group: { _id: '$_id', messages: { $push: '$messages' } } }
+        ]).exec();
 
-        if(!currentUser){
+
+        if (!currentUser) {
             return NextResponse.json({
                 success: false,
                 message: 'User not found'
@@ -39,20 +40,21 @@ export const GET = async (request: NextRequest) => {
             })
         }
 
-        if( currentUser.length === 0){
+        if (currentUser.length === 0) {
             return NextResponse.json({
                 success: true,
                 message: "User Inbox is empty"
             },
-        {
-            status: 200
-        })
+                {
+                    status: 200
+                })
         }
+        console.log(currentUser[0].messages)
 
         return NextResponse.json({
             success: true,
             messages: currentUser[0].messages
-           
+
         }, {
             status: 200
         })

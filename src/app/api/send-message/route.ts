@@ -22,7 +22,7 @@ export const POST = async(request: NextRequest) => {
             }
         )
         }
-
+        
         const user = await UserModel.findOne({username: username});
         if(!user){
             return NextResponse.json({
@@ -32,7 +32,14 @@ export const POST = async(request: NextRequest) => {
                 status: 404
             })
         }
-
+      
+        if(!user.isAcceptingMessage){
+            return NextResponse.json({
+                success: false,
+                message: 'User is not accepting messages'}
+        )
+        }
+  
         const message = {content: content, createdAt: new Date()}
         user.messages.push( message as Message);
         await user.save({validateBeforeSave: false})
@@ -43,7 +50,7 @@ export const POST = async(request: NextRequest) => {
         }, {
             status: 200
         })
-
+   
     } catch (error) {
         console.log("Something went wrong while sending the message");
         return NextResponse.json({
