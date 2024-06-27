@@ -122,10 +122,13 @@ const message = form.watch("content") || ''
     </div>
    
     <Button onClick={suggestMessages} >Suggest</Button>
-    <div className='flex flex-col' >
+    <h1 className='mt-4'>Click on any message below to select it.</h1>
+    <div className='flex flex-col space-y-4 border-gray-200 border rounded-lg p-8 my-4' >
+      <h1 className='text-2xl font-semibold'>Messages</h1>
     {messages.map((message, index) => (
-    <button onClick={()=>{form.setValue("content", message )}} key={index}>{message}</button>
+    <Button className="bg-transparent text-black hover:bg-gray-100 border-gray-200 border" onClick={()=>{form.setValue("content", message )}} key={index}>{message}</Button>
     ))}
+    
     </div>
     </div>
   
