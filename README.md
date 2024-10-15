@@ -1,4 +1,4 @@
-# AskBuddy | Send Anonymous Confessions to your loved ones
+# AskBuddy | Send Anonymous Confessions
 
 ## Description:
 AskBuddy is an online platform where you can receive/send anonymous messages. It all starts with creating an account and sharing your unique profile link to the audience you want to receive messages from. The audience has option to send their own message or send an AI generated message of their choice
